@@ -7,11 +7,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **プロジェクト名**: task-board
 - **概要**: タスクを追加・完了/未完了の切り替え・削除できるタスクボード Web アプリケーション。完了済みタスクはグレー表示になる。
 - **技術スタック**: React 18 + Vite（JavaScript / JSX）
-- **現状**: 基本機能（タスク追加・完了切替・削除・完了時グレー表示・localStorage による永続化）を実装済み。
+- **現状**: 基本機能（タスク追加・編集・完了切替・削除・完了時グレー表示・localStorage による永続化）を実装済み。
+
+## 技術スタック
+
+- **言語**: JavaScript（ES Modules）/ JSX（TypeScript は未使用）
+- **UI ライブラリ**: React 18（`react` / `react-dom` `^18.3.1`）— 関数コンポーネント + Hooks
+- **ビルドツール**: Vite 5（`vite` `^5.4.11`）+ `@vitejs/plugin-react`
+- **状態管理**: React 標準の `useState` / `useEffect` のみ（外部の状態管理ライブラリは導入しない）
+- **データ永続化**: ブラウザの `localStorage`（サーバー・DB は不要）
+- **スタイル**: 素の CSS（`src/style.css`）。クラス名は BEM 風
+- **ホスティング / CI**: GitHub Pages + GitHub Actions（詳細は「デプロイ先」を参照）
 
 ## 機能一覧
 
 - テキスト入力でタスクを追加できる
+- 既存タスクのテキストをインラインで編集できる（Enter で保存・Escape でキャンセル）
 - チェックボックスで完了・未完了を切り替えられる
 - タスクを削除できる
 - 完了済みのタスクはグレー（取り消し線付き）で表示する
@@ -40,7 +51,7 @@ task-board/
     ├── style.css           # スタイル定義
     └── components/
         ├── TaskForm.jsx    # タスク追加フォーム
-        └── TaskItem.jsx    # タスク1件の表示（完了切替・削除）
+        └── TaskItem.jsx    # タスク1件の表示（編集・完了切替・削除）
 ```
 
 ## コーディング規約
@@ -55,6 +66,19 @@ task-board/
   - 変数名・関数名は英語のキャメルケース、コメントは日本語で記述する。
   - 機能ごとに関数・コンポーネントを分割し、可読性を保つ。
 - **アクセシビリティ**: `aria-label` などを付与し、フォームやボタンの用途が分かるようにする。
+
+## コンポーネント命名規約
+
+- **コンポーネント名**: 英語のパスカルケース（例: `App` / `TaskForm` / `TaskItem`）。ファイル名も同名の `.jsx` とし、1 ファイル 1 コンポーネントを基本とする。
+- **配置**: 画面全体を組み立てる `App.jsx` は `src/` 直下、再利用・分割した部品は `src/components/` 配下に置く。
+- **役割による命名**: 名前から役割が分かるようにする（`〜Form` は入力フォーム、`〜Item` は一覧の 1 件、`〜List` は一覧全体、など）。
+- **Props / イベントハンドラ**:
+  - 親から渡すコールバックは `on〜`（例: `onAdd` / `onToggle` / `onDelete` / `onEdit`）と命名する。
+  - コンポーネント内部で定義するハンドラ関数は `handle〜`（例: `handleSubmit` / `handleKeyDown`）と命名する。
+- **CSS クラス名（BEM 風）**: `ブロック__要素--修飾子` の形式で、コンポーネント名に対応するブロック名を使う。
+  - ブロック: コンポーネント単位（例: `task-form` / `task-item`）
+  - 要素: `ブロック__要素`（例: `task-item__text` / `task-item__delete`）
+  - 状態・修飾子: `ブロック--修飾子`（例: `task-item--done` / `task-item--editing`）
 
 ## セットアップ・実行方法
 
@@ -76,6 +100,16 @@ npm run dev
 npm run build     # dist/ に成果物を生成
 npm run preview   # ビルド結果をローカルで確認
 ```
+
+## デプロイ先
+
+- **ホスティング**: GitHub Pages
+- **公開 URL**: https://TsuyoshiKatayama-Gmail.github.io/task-board/
+- **リポジトリ**: https://github.com/TsuyoshiKatayama-Gmail/task-board
+- **デプロイ方法**: `main` ブランチへの push をトリガーに、GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルド（`npm ci` → `npm run build`）し、`dist/` を GitHub Pages へ公開する。Actions タブから手動実行（`workflow_dispatch`）も可能。
+- **注意点**:
+  - GitHub Pages はリポジトリ名のサブパス（`/task-board/`）で公開されるため、`vite.config.js` の `base: "/task-board/"` を変更しない（変更するとアセットのパスが解決できず 404 になる）。
+  - `dist/` はコミットせず、ビルドは CI 上で行う（成果物はリポジトリに含めない）。
 
 ## Git 運用ルール
 
