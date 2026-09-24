@@ -1,0 +1,10 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// Vite の設定（React プラグインを有効化）
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    open: true, // dev サーバー起動時にブラウザを自動で開く
+  },
+});
