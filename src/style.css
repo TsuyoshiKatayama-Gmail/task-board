@@ -104,6 +104,23 @@ body {
   text-decoration: line-through;
 }
 
+.task-item__edit {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: #0052cc;
+  background-color: transparent;
+  border: 1px solid #0052cc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.task-item__edit:hover {
+  color: #fff;
+  background-color: #0052cc;
+}
+
 .task-item__delete {
   flex-shrink: 0;
   padding: 6px 10px;
@@ -119,6 +136,57 @@ body {
 .task-item__delete:hover {
   color: #fff;
   background-color: #de350b;
+}
+
+/* 編集モード */
+.task-item__edit-input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #4c9aff;
+  border-radius: 6px;
+  outline: none;
+}
+
+.task-item__edit-input:focus {
+  box-shadow: 0 0 0 2px rgba(76, 154, 255, 0.3);
+}
+
+.task-item__save {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  color: #fff;
+  background-color: #0052cc;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task-item__save:hover {
+  background-color: #0747a6;
+}
+
+.task-item__save:disabled {
+  background-color: #a5adba;
+  cursor: not-allowed;
+}
+
+.task-item__cancel {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  color: #42526e;
+  background-color: transparent;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task-item__cancel:hover {
+  background-color: #ebecf0;
 }
 
 /* タスクが無いときのメッセージ */

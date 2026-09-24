@@ -48,6 +48,13 @@ export default function App() {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
+  // タスクのテキストを編集する
+  const editTask = (id, text) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, text } : task))
+    );
+  };
+
   return (
     <div className="app">
       <h1 className="app__title">タスクボード</h1>
@@ -62,6 +69,7 @@ export default function App() {
               task={task}
               onToggle={toggleTask}
               onDelete={deleteTask}
+              onEdit={editTask}
             />
           ))}
         </ul>
