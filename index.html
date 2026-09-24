@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>タスクボード</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- React 本体（CDN 経由・ビルド不要） -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- JSX をブラウザ上で変換するための Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <!-- React アプリのマウント先 -->
+  <div id="root"></div>
+
+  <!-- type="text/babel" にすることで JSX をそのまま記述できる -->
+  <script type="text/babel" src="js/app.js"></script>
+</body>
+</html>
